@@ -1,6 +1,4 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,8 +21,8 @@
       background: #ff9800;
       border: none;
       padding: 10px 20px;
-      color: white;
-      font-size: 16px;
+      color: Black;
+      font-size: 17px;
       border-radius: 5px;
       cursor: pointer;
     }
@@ -52,20 +50,19 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <div id="balance">Balance: $0.00</div>
+  <div id="balance">Balance: $0.0000  </div>
   <button id="withdraw">Withdraw</button>
   <div>
-    <img id="gift" src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png" alt="Lucky Box" />
+    <img id="gift" src="https://i.postimg.cc/1RMzSZxT/images-removebg-preview.png" alt="Lucky Box" />
   </div>
-  <div id="adOverlay">Watching ad... Please wait <span id="countdown">15</span> seconds</div>
-
-  <script>
-    let balance = 0.00;
+  <div id="adOverlay">Watching ads... <span id="countdown">15</span> seconds</div>  <script>
+    let balance = 0;
     const gift = document.getElementById('gift');
     const balanceText = document.getElementById('balance');
     const adOverlay = document.getElementById('adOverlay');
     const countdown = document.getElementById('countdown');
 
+    // Get Telegram User Data
     const tg = window.Telegram.WebApp;
     tg.expand();
     const user = tg.initDataUnsafe?.user || { id: 0, first_name: 'Guest' };
@@ -83,18 +80,43 @@
           clearInterval(timer);
           adOverlay.style.display = 'none';
 
-          const earned = (Math.random() * 0.05).toFixed(2);
+          const earned = (Math.random(4) * (0.001)).toFixed(4);
           balance += parseFloat(earned);
-          balanceText.textContent = `Balance: $${balance.toFixed(2)}`;
+          balanceText.textContent = `Balance: $${balance.toFixed(4)} `;
 
           alert(`You earned $${earned}, ${user.first_name || 'User'}!`);
+
+          // Send update to your bot server (future step)
+          /*
+          fetch('https://your-backend.com/update-balance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              user_id: user.id,
+              amount: earned
+            })
+          });
+          */
         }
       }, 1000);
     });
 
     document.getElementById('withdraw').addEventListener('click', () => {
       alert(`Withdraw request sent for ${user.first_name}`);
+
+      // Send withdraw request to bot server (future step)
+      /*
+      fetch('https://your-backend.com/withdraw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.id })
+      });
+      */
     });
-  </script>
-</body>
+  </script></body>
 </html>
+
+
+<h2 id="Click">Click the Lucky Box</h2>
+
+
